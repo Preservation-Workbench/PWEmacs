@@ -1,5 +1,24 @@
 ;;; +bindings.el -*- lexical-binding: t; -*-
 
+;; WAIT: Fjerne senere: https://github.com/abo-abo/swiper/pull/2687
+;; TODO: Untitled buffere vises ikke av denne -> fiks
+(defun zz/counsel-buffer-or-recentf-candidates ()
+  "Return candidates for `counsel-buffer-or-recentf'."
+  (require 'recentf)
+  (recentf-mode)
+  (let ((buffers
+         (delq nil
+               (mapcar (lambda (b)
+                         (when (buffer-file-name b)
+                           (abbreviate-file-name (buffer-file-name b))))
+                       (delq (current-buffer) (buffer-list))))))
+    (append
+     buffers
+     (cl-remove-if (lambda (f) (member f buffers))
+                   (counsel-recentf-candidates)))))
+
+(advice-add #'counsel-buffer-or-recentf-candidates :override #'zz/counsel-buffer-or-recentf-candidates)
+
 
 ;; TODO: Se for hydras (og bindings generelt): https://github.com/cmpitg/emacs-cmpitg/blob/master/src/config-core-keybindings.el
 ;; -> se gjennom hele (my bra): https://github.com/cmpitg/emacs-cmpitg/tree/master/src
@@ -606,6 +625,8 @@
     "C-u"                         'upcase-dwim
     "C-v"                         'yank
     ;;"C-w"                         'ark-kill-this-buffer ;TODO: Denne virker ikke på untitled etter at daemon ble tatt i bruk
+    ;; TODO: Legg inn at når gjør C-w på messages-buffer drepes den ikke og en bytter til scratch-buffer
+    "C-w"                         'centaur-tabs--kill-this-buffer-dont-ask
     "C-y"                         'redo
     "C-z"                         'undo
     ;;"<C-right>"                   'awesome-tab-forward-tab
@@ -646,7 +667,7 @@
     ;;"<home>"                      'mwim-beginning-of-code-or-line-or-comment
 
     ;; TODO: Lag en slik for hver feature -> sjekk hvilken keys som allerede definert for hver av de
-    (:when (featurep! :completion ivy)
+    (:when (featurep! :completion ivy) ;; WAIT: Hva er forskjellen på swiper-isearch og '+default/search-buffer' ?
         "C-f"        #'swiper-isearch
         "C-S-f"      #'swiper-all
         "C-S-o"      #'ivy-switch-buffer

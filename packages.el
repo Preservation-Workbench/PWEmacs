@@ -51,5 +51,7 @@
 
 (package! bar-cursor)
 (package! hercules)
+(package! org-autolist)
+
 
 
