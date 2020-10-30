@@ -29,15 +29,6 @@
 ;; WAIT: Hvor kan denne legges inn så brukes med en gang og slipper "jerk motion". Kan ikke legges i init.el (er for tidlig)
 (add-hook 'kill-emacs-hook #'save-frame-dimensions)
 
-
-(cond (IS-LINUX 'x)
-(let ((font-dest (cl-case window-system
-                   (x  (concat (or (getenv "XDG_DATA_HOME")            ;; Default Linux install directories
-                                   (concat (getenv "HOME") "/.local/share"))
-                               "/fonts/")))))
-  (unless (file-exists-p (concat font-dest "all-the-icons.ttf"))
-    (all-the-icons-install-fonts t))))
-
 ;;; Cursor:
 (bar-cursor-mode 1)
 
