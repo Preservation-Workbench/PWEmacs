@@ -52,6 +52,8 @@
 (package! bar-cursor)
 (package! hercules)
 (package! org-autolist)
+(package! mini-frame)
+
 
 
 

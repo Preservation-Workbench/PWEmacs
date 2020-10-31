@@ -110,3 +110,10 @@
                   "Default"))))    
 )
        
+(mini-frame-mode +1)
+
+(custom-set-variables
+ '(mini-frame-show-parameters
+   '((top . 10)
+     (width . 0.7)
+     (left . 0.5))))      

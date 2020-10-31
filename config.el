@@ -151,6 +151,3 @@
 (load! "+ui")
 (load! "+bindings.el")
 (load! "+org.el")
-
-
-
