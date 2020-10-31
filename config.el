@@ -45,12 +45,9 @@
 ;; (add-hook 'minibuffer-setup-hook #'hide-mode-line-mode)
 
 
-
 (defun maple-scratch-hide-lines ()
   (when (or maple-scratch-anywhere (equal (buffer-name) maple-scratch-buffer))
-    (progn
-        (centaur-tabs-mode -1)
-        (hide-mode-line-mode))))
+      (hide-mode-line-mode)))
 
 (add-hook 'after-change-major-mode-hook #'maple-scratch-hide-lines)
 

@@ -66,3 +66,47 @@
   (my-shell-command-asynchronously
    (format "zenity --info --title \"%s\" --text \"%s\""
            title message)))
+
+(after! centaur-tabs
+(defun centaur-tabs-hide-tab (x)
+  "Do no to show buffer X in tabs."
+  (let ((name (format "%s" x)))
+    (or
+     ;; Current window is not dedicated window.
+     (window-dedicated-p (selected-window))
+
+     ;; Buffer name not match below blacklist.
+     (string-prefix-p "*scratch*" name)
+     (string-prefix-p "*epc" name)
+     (string-prefix-p "*helm" name)
+     (string-prefix-p "*Helm" name)
+     (string-prefix-p "*Compile-Log*" name)
+     (string-prefix-p "*lsp" name)
+     (string-prefix-p "*company" name)
+     (string-prefix-p "*Flycheck" name)
+     (string-prefix-p "*tramp" name)
+     (string-prefix-p " *Mini" name)
+     (string-prefix-p "*help" name)
+     (string-prefix-p "*straight" name)
+     (string-prefix-p " *temp" name)
+     (string-prefix-p "*Help" name)
+     (string-prefix-p "*mybuf" name)
+
+     ;; Is not magit buffer.
+     (and (string-prefix-p "magit" name)
+	  (not (file-name-extension name)))
+     )))
+
+  (defun centaur-tabs-buffer-groups ()
+    "Use as few groups as possible."
+    (list (cond ((string-equal "*" (substring (buffer-name) 0 1))
+                  (cond ((string-equal "eglot" (downcase (substring (buffer-name) 1 6)))
+                        "Eglot")
+                        (t
+                        "Tools")))
+                ((string-equal "magit" (downcase (substring (buffer-name) 0 5)))
+                  "Magit")
+                (t
+                  "Default"))))    
+)
+       
