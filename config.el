@@ -153,3 +153,20 @@
 
 (point-history-mode t)
 
+;; https://github.com/CsBigDataHub/counsel-fd/blob/master/counsel-fd.el
+;; TODO: Finn bedre ivy/counsel for fd-find eller fiks/lag kode selv
+
+(use-package counsel-etags
+  :init
+  (add-hook 'prog-mode-hook
+        (lambda ()
+          (add-hook 'after-save-hook
+            'counsel-etags-virtual-update-tags 'append 'local)))
+  :config
+  (setq counsel-etags-update-interval 60)
+  (push "build" counsel-etags-ignore-directories))
+
+;; TODO: Virker bare med enkelte ivy/counsel og treg i start (fordi ikke lagt inn start etter ivy?)
+;; (use-package all-the-icons-ivy
+;;  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))  
+

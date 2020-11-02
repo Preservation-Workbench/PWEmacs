@@ -616,7 +616,7 @@
     ;;"C-d"                         'ark-delete-file-and-buffer
     "C-g"                         'goto-line
     "C-l"                         'downcase-dwim
-    ;;"C-n"                         'ark-new-untitled-buffer
+    "C-n"                         'new-untitled-buffer
     "C-o"                         'find-file
     "C-q"                         'delete-frame
     ;;"C-r"                         'crux-rename-file-and-buffer
@@ -653,7 +653,7 @@
     "M-g"                         'counsel-rg
     "M-i"                         'counsel-imenu
     "M-k"                         'counsel-descbinds
-    "M-o"                         'counsel-outline
+    ;;"M-o"                         'counsel-outline
     "M-u"                         'counsel-unicode-char
     ;;"M-s"                         'eshell
     ;;"<M-down>"                    'ark-move-text-down
@@ -670,16 +670,17 @@
     (:when (featurep! :completion ivy) ;; WAIT: Hva er forskjellen på swiper-isearch og '+default/search-buffer' ?
         [C-tab]      #'+ivy/switch-buffer
         "M-p"        #'ivy-point-history
+        "M-t"        #'counsel-etags-list-tag-in-current-file
         "C-f"        #'swiper-isearch
         "C-S-f"      #'swiper-all
-        "C-S-o"      #'counsel-buffer-or-recentf
+        "M-o"      #'counsel-buffer-or-recentf
         "C-S-v"      #'counsel-yank-pop
         ;;"C-S-r"        #'ivy-resume
         (:after ivy
           :map ivy-minibuffer-map
             [C-tab]     #'ivy-next-line
             ;; "TAB"    #'ivy-alt-done
-            "TAB"       #'ivy-next-line
+            ;;"TAB"       #'ivy-next-line  ;; TODO: Ha bare for +ivy/switch-buffer. Samme for linje under
             "<backtab>"   #'ivy-previous-line
             "C-g"   #'keyboard-escape-quit)
         ;;; Swiper keys
