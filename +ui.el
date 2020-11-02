@@ -107,13 +107,21 @@
                 ((string-equal "magit" (downcase (substring (buffer-name) 0 5)))
                   "Magit")
                 (t
-                  "Default"))))    
+                  "Default"))))
 )
-       
+
 (mini-frame-mode +1)
+;; (setq mini-frame-show-parameters '((alpha . (80 70))))
+(setq mini-frame-color-shift-step 10)
+;; TODO: Test mini-frame-ignore-commands
 
 (custom-set-variables
  '(mini-frame-show-parameters
    '((top . 10)
      (width . 0.7)
-     (left . 0.5))))      
+     (left . 0.5))))
+
+(use-package mixed-pitch
+  :hook
+  ;; If you want it in all text modes:
+  (text-mode . mixed-pitch-mode))

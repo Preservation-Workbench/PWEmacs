@@ -58,7 +58,6 @@
 (setq initial-scratch-message "")
 
 (use-package maple-scratch
-  :ensure nil
   :hook (window-setup . maple-scratch-init)
   :config
   (setq maple-scratch-source nil
@@ -151,3 +150,6 @@
 (load! "+ui")
 (load! "+bindings.el")
 (load! "+org.el")
+
+(point-history-mode t)
+

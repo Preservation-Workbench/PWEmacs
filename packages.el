@@ -53,6 +53,12 @@
 (package! hercules)
 (package! org-autolist)
 (package! mini-frame)
+(package! mixed-pitch)
+(package! show-eol :recipe (:host github :repo "jcs-elpa/show-eol"))
+(package! point-history :recipe (:host github :repo "blue0513/point-history"))
+(package! ivy-point-history :recipe (:host github :repo "SuzumiyaAoba/ivy-point-history"))
+
+
 
 
 

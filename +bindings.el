@@ -668,11 +668,20 @@
 
     ;; TODO: Lag en slik for hver feature -> sjekk hvilken keys som allerede definert for hver av de
     (:when (featurep! :completion ivy) ;; WAIT: Hva er forskjellen på swiper-isearch og '+default/search-buffer' ?
+        [C-tab]      #'+ivy/switch-buffer
+        "M-p"        #'ivy-point-history
         "C-f"        #'swiper-isearch
         "C-S-f"      #'swiper-all
-        "C-S-o"      #'ivy-switch-buffer
+        "C-S-o"      #'counsel-buffer-or-recentf
         "C-S-v"      #'counsel-yank-pop
         ;;"C-S-r"        #'ivy-resume
+        (:after ivy
+          :map ivy-minibuffer-map
+            [C-tab]     #'ivy-next-line
+            ;; "TAB"    #'ivy-alt-done
+            "TAB"       #'ivy-next-line
+            "<backtab>"   #'ivy-previous-line
+            "C-g"   #'keyboard-escape-quit)
         ;;; Swiper keys
         (:after swiper
         (:map swiper-map
