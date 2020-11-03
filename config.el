@@ -1,27 +1,5 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-;; TODO: Fiks så "open with emacs" fra thunar bruker kommando på denne formen: emacsclient -a /usr/bin/emacs FILE
-;; --> ikke helt fullgod løsning (men muligens bare når startet fra cli) -> alternate virker ikke riktig
-;; -> må ha script som sjekker om emacs startet og så kjører enten  'emacs FILENAME & disown' eller 'emacsclient -q FILENAME & disown'
-;; -> noe sånt: https://stackoverflow.com/questions/24910937/how-do-i-start-emacs-from-the-command-line-but-use-emacsclient-if-a-server-is-al
-;; -> må i tillegg fikse at den ene filen som åpnes på denne måten ikke har synlig tab -> tabs pakke ikke lastet tidlig nok?
-;; Fjern også yes/no spm som kommer ved lukking av frame da
-
-;; TODO: Feil farge på untitled pga solaire-mode -> finn bedre måte å justere, evt fjerne den enn linje under som ikke virker
-;; -> evt få til å slå av solaire totalt -> får da mørkere bakgrunn for alt som er bedre for øynene
-;; (solaire-global-mode -1)
-
-; TODO: Fiks så tabs er lastet før untitled lages
-;(defun my-close-scratch ()
-  ;(kill-buffer "*scratch*")
-  ;(if (not (delq nil (mapcar 'buffer-file-name (buffer-list))))
-      ;(new-untitled-buffer)
-    ;))
-;
-;(defun my-emacs-startup-hook ()
-  ;(my-close-scratch))
-;(add-hook 'emacs-startup-hook 'my-emacs-startup-hook)
-;
 ; TODO: Hvorfor feil bakgrunnsfarge? Fordi ikke lagret fil?
 (defun new-untitled-buffer ()
   "Opens a new empty buffer."

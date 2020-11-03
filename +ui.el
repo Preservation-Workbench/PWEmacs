@@ -1,6 +1,8 @@
 ;;; +ui.el -*- lexical-binding: t; -*-
 
-(use-package emacs
+;; TODO: Se for eksempel på bruk av doom emacs sin use-package! (med utropstegn): https://github.com/jethrokuan/dots/blob/master/.doom.d/config.el
+
+(use-package! emacs
   :config
 
   ;; Frame:
@@ -8,24 +10,17 @@
   (setq-default icon-title-format  '("PWEmacs"))
   (menu-bar-mode 1)
   (setq doom-theme 'doom-one-light)
-  (when-let (dims (doom-store-get 'last-frame-size))
-    (cl-destructuring-bind ((left . top) width height fullscreen) dims
-      (setq initial-frame-alist
-            (append initial-frame-alist
-                    `((left . ,left)
-                      (top . ,top)
-                      (width . ,width)
-                      (height . ,height)
-                      (fullscreen . ,fullscreen))))))
-  (defun save-frame-dimensions ()
-    (doom-store-put 'last-frame-size
-                    (list (frame-position)
-                          (frame-width)
-                          (frame-height)
-                          (frame-parameter nil 'fullscreen))))
-  ;; WAIT: Hvor kan denne legges inn så brukes med en gang og slipper "jerk motion". Kan ikke legges i init.el (er for tidlig)
-  (add-hook 'kill-emacs-hook #'save-frame-dimensions)
-
+  (defun pw-save-frame-size ()           ; Save frame-size between sessions
+    (pw-de-maximize)
+    (call-process-shell-command "nohup grep -q 'emacs.geometry:*' ~/.Xresources 2> /dev/null || echo 'emacs.geometry: 100x46' >> ~/.Xresources &")
+    (call-process-shell-command (concat "nohup sed -i 's/^emacs.geometry: .*/emacs.geometry: " (number-to-string (frame-width)) "x" (number-to-string (+ 2 (frame-height))) "/g' ~/.Xresources &"))
+    (call-process-shell-command "nohup xrdb -merge ~/.Xresources &"))
+  (defun pw-de-maximize ()
+    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                           '(0 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                           '(0 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
+  (add-hook 'kill-emacs-hook 'pw-save-frame-size)
   ;; Cursor:
   (bar-cursor-mode 1)
 
@@ -34,7 +29,7 @@
   (setq confirm-kill-emacs nil) ; Do not ask for confirm when killing emacs
  )
 
-(use-package centaur-tabs
+(use-package! centaur-tabs
   :after centaur-tabs
   :config
   (defun centaur-tabs-hide-tab (x)
@@ -75,7 +70,7 @@
                  "Default"))))
   )
 
-(use-package mini-frame
+(use-package! mini-frame
   :config
   (mini-frame-mode +1)
   (setq mini-frame-color-shift-step 10)
@@ -86,7 +81,7 @@
   (text-mode . mixed-pitch-mode)
   )
 
-(use-package hl-todo
+(use-package! hl-todo
   :after hl-todo
   :config
   (setq hl-todo-highlight-punctuation ":"
