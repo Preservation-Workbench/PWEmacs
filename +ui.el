@@ -94,7 +94,7 @@
 
      ;; Is not magit buffer.
      (and (string-prefix-p "magit" name)
-	  (not (file-name-extension name)))
+          (not (file-name-extension name)))
      )))
 
   (defun centaur-tabs-buffer-groups ()
@@ -125,3 +125,15 @@
   :hook
   ;; If you want it in all text modes:
   (text-mode . mixed-pitch-mode))
+
+(after! hl-todo
+  (setq hl-todo-highlight-punctuation ":"
+        hl-todo-keyword-faces
+        `(
+          ("TODO" error bold)
+          ("FIXME" error bold)
+          ("HACK" font-lock-constant-face bold)
+          ("NOTE" success bold)
+          ("DEPRECATED" font-lock-doc-face bold)
+          ("BUG" error bold)
+          ("WAIT" font-lock-constant-face bold))))
