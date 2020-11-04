@@ -146,5 +146,9 @@
 
 ;; TODO: Virker bare med enkelte ivy/counsel og treg i start (fordi ikke lagt inn start etter ivy?)
 ;; (use-package all-the-icons-ivy
-;;  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))  
+;;  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
 
+(eval-after-load 'flycheck
+  '(progn
+     (require 'flycheck-bashate)
+     (flycheck-bashate-setup)))

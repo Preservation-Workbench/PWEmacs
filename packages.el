@@ -55,6 +55,7 @@
 (package! all-the-icons-ivy)
 (package! mini-frame)
 (package! mixed-pitch)
+(package! flycheck-bashate)
 (package! counsel-etags) ;; TODO: Bruke counsel-imenu heller?
 (package! show-eol :recipe (:host github :repo "jcs-elpa/show-eol"))
 (package! point-history :recipe (:host github :repo "blue0513/point-history"))
