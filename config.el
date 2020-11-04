@@ -152,3 +152,21 @@
   '(progn
      (require 'flycheck-bashate)
      (flycheck-bashate-setup)))
+
+(add-hook 'csv-mode-hook (lambda () (setq truncate-lines t)))
+
+(use-package! ctrlf
+  :bind
+  ([remap isearch-forward]         . ctrlf-forward-literal)
+  ([remap isearch-backward]        . ctrlf-backward-literal)
+  ([remap isearch-forward-regexp]  . ctrlf-forward-regexp)
+  ([remap isearch-backward-regexp] . ctrlf-backward-regexp)
+  :config
+  ;; Clear out the bindings because we've already defined them.
+  ;; TODO: Sett opp i bindings heller
+  (setq ctrlf-mode-bindings '())
+  (setq ctrlf-minibuffer-bindings
+        `(
+          (,(kbd "<return>") . ctrlf-next-match)
+          (,(kbd "<escape>") . exit-minibuffer)))
+  (ctrlf-mode +1))
