@@ -170,3 +170,9 @@
           (,(kbd "<return>") . ctrlf-next-match)
           (,(kbd "<escape>") . exit-minibuffer)))
   (ctrlf-mode +1))
+
+
+
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (tab-jump-out-mode)))
