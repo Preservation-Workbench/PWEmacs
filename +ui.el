@@ -9,6 +9,8 @@
   ;; Frame:
   (setq-default frame-title-format '("PWEmacs"))
   (setq-default icon-title-format  '("PWEmacs"))
+  (setq doom-font (font-spec :family "Fira Code" :size 13))
+  ;; TODO: Automatiser installasjon av font selv heller enn bruke kommando
   (menu-bar-mode 1)
   (setq doom-theme 'doom-one-light)
   (defun pw-save-frame-size ()           ; Save frame-size between sessions
@@ -27,6 +29,7 @@
     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
                            '(0 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
   (add-hook 'kill-emacs-hook 'pw-save-frame-size)
+
   ;; Cursor:
   (bar-cursor-mode 1)
 
