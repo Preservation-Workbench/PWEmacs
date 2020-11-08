@@ -724,3 +724,7 @@
 
 ;; tweak binding to taste
 ;;(define-key org-mode-map (kbd "C-c C-v") #'org-babel-mode)
+
+;; Better home and end keys
+(map! [home] #'doom/backward-to-bol-or-indent
+      [end] #'doom/forward-to-last-non-comment-or-eol)

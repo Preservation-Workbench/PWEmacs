@@ -128,6 +128,8 @@
 (load! "+ui")
 (load! "+bindings.el")
 (load! "+org.el")
+(load! "+markdown.el")
+
 
 (point-history-mode t)
 

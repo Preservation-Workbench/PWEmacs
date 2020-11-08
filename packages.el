@@ -62,3 +62,5 @@
 (package! point-history :recipe (:host github :repo "blue0513/point-history"))
 (package! ivy-point-history :recipe (:host github :repo "SuzumiyaAoba/ivy-point-history"))
 (package! ctrlf :recipe (:host github :repo "raxod502/ctrlf"))
+
+(package! which-key :disable t)
