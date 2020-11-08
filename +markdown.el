@@ -19,6 +19,7 @@
 
 
 ;; https://emacs.stackexchange.com/a/47747
+;; TODO: Tilsvarende for org-mode her men virker ikke bra nok for org: https://www.reddit.com/r/emacs/comments/i9pfld/disable_orgprettyentities_on_the_current_line/
 (defvar pwe/current-line '(0 . 0)
   "(start . end) of current line in current buffer")
 (make-variable-buffer-local 'pwe/current-line)

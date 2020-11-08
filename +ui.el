@@ -1,6 +1,7 @@
 ;;; +ui.el -*- lexical-binding: t; -*-
 
-;; TODO: Se for eksempel på bruk av doom emacs sin use-package! (med utropstegn): https://github.com/jethrokuan/dots/blob/master/.doom.d/config.el
+;; TODO: Se for eksempel på bruk av doom emacs sin use-package! (med utropstegn):
+;; https://github.com/jethrokuan/dots/blob/master/.doom.d/config.el
 
 (use-package! emacs
   :config
@@ -12,8 +13,13 @@
   (setq doom-theme 'doom-one-light)
   (defun pw-save-frame-size ()           ; Save frame-size between sessions
     (pw-de-maximize)
-    (call-process-shell-command "nohup grep -q 'emacs.geometry:*' ~/.Xresources 2> /dev/null || echo 'emacs.geometry: 100x46' >> ~/.Xresources &")
-    (call-process-shell-command (concat "nohup sed -i 's/^emacs.geometry: .*/emacs.geometry: " (number-to-string (frame-width)) "x" (number-to-string (+ 2 (frame-height))) "/g' ~/.Xresources &"))
+    (call-process-shell-command
+     (concat "nohup grep -q 'emacs.geometry:*' ~/.Xresources 2> /dev/null"
+             " || echo 'emacs.geometry: 100x46' >> ~/.Xresources &"))
+    (call-process-shell-command
+     (concat "nohup sed -i 's/^emacs.geometry: .*/emacs.geometry: "
+             (number-to-string (frame-width)) "x"
+             (number-to-string (+ 2 (frame-height))) "/g' ~/.Xresources &"))
     (call-process-shell-command "nohup xrdb -merge ~/.Xresources &"))
   (defun pw-de-maximize ()
     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
@@ -25,9 +31,10 @@
   (bar-cursor-mode 1)
 
   ;; Messages:
-  (setq confirm-kill-processes nil)   ; Do not ask for confirm when killing processes
-  (setq confirm-kill-emacs nil) ; Do not ask for confirm when killing emacs
+  (setq confirm-kill-processes nil) ; Do not ask confirm when killing processes
+  (setq confirm-kill-emacs nil) ; Do not ask confirm when killing emacs
  )
+
 
 (use-package! centaur-tabs
   :after centaur-tabs
@@ -60,7 +67,8 @@
   (defun centaur-tabs-buffer-groups ()
     "Use as few groups as possible."
     (list (cond ((string-equal "*" (substring (buffer-name) 0 1))
-                  (cond ((string-equal "eglot" (downcase (substring (buffer-name) 1 6)))
+                 (cond ((string-equal "eglot"
+                                      (downcase (substring (buffer-name) 1 6)))
                         "Eglot")
                         (t
                         "Tools")))
@@ -70,16 +78,19 @@
                  "Default"))))
   )
 
+
 (use-package! mini-frame
   :config
   (mini-frame-mode +1)
   (setq mini-frame-color-shift-step 10)
   (setq mini-frame-show-parameters '((top . 0.01) (width . 0.7) (left . 0.5))))
 
+
 (use-package mixed-pitch
   :hook
   (text-mode . mixed-pitch-mode)
   )
+
 
 (use-package! hl-todo
   :after hl-todo
@@ -96,25 +107,3 @@
           ("WAIT" font-lock-constant-face bold)))
   )
 
-
-
-;;; Dialogs:
-
-;; WAIT: Lag gui-varianter etter behov for når noe er åpnet fra meny og ikke shortcut
-;; -> se flere gode eksempler her: https://github.com/cmpitg/emacs-config/blob/master/config-default/custom-functions.el
-;; Og her: https://github.com/cmpitg/emacs-cmpitg/blob/780d35d0ee3678e9c97a8a473de3d47ba2c4e95c/src/config-core-functions.el
-
-;;(defun sauron-fx-zenity (msg)
-;; (defun sauron-fx-zenity ()
-;;   "Pop-up a zenity window with MSG."
-;;   (interactive)
-;;   (shell-command "zenity --question --text Hi"))
-;;   ;(unless (executable-find "zenity")
-;;     ;(error "zenity not found"))
-;;   ;(call-process "zenity" nil 0 nil "--info" "--title=Sauron"
-;;     ;(concat "--text=" msg)))
-
-;; (defun my-notify (title message)
-;;   (my-shell-command-asynchronously
-;;    (format "zenity --info --title \"%s\" --text \"%s\""
-;;            title message)))
