@@ -14,6 +14,7 @@
        hydra
        indent-guides     ; highlighted indent columns
        ligatures         ; ligatures and symbols to make your code pretty again
+       (emoji +unicode)  ; 🙂
        modeline          ; snazzy, Atom-inspired modeline, plus API
        ;;neotree           ; a project drawer, like NERDTree for vim
        (popup +all)   ; tame sudden yet inevitable temporary windows
