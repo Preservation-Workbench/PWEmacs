@@ -21,7 +21,7 @@
     (call-process-shell-command
      (concat "nohup sed -i 's/^emacs.geometry: .*/emacs.geometry: "
              (number-to-string (frame-width)) "x"
-             (number-to-string (+ 2 (frame-height))) "/g' ~/.Xresources &"))
+             (number-to-string (- (frame-height) 1)) "/g' ~/.Xresources &"))
     (call-process-shell-command "nohup xrdb -merge ~/.Xresources &"))
   (defun pw-de-maximize ()
     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
@@ -110,3 +110,8 @@
           ("WAIT" font-lock-constant-face bold)))
   )
 
+
+
+;; (setq display-fill-column-indicator-character ?|)
+;; (setq display-fill-column-indicator-character ?\N{U+2506})
+;; TODO: Se hvordan hvordan indent guides får penere strek. Bare face?

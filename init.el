@@ -14,13 +14,9 @@
        hydra
        indent-guides     ; highlighted indent columns
        (ligatures +fira)         ; ligatures and symbols to make your code pretty again
-       (emoji +unicode)  ; 🙂
        modeline          ; snazzy, Atom-inspired modeline, plus API
-       ;;neotree           ; a project drawer, like NERDTree for vim
        (popup +all)   ; tame sudden yet inevitable temporary windows
        tabs              ; a tab bar for Emacs
-       ;;treemacs          ; a project drawer, like neotree but cooler
-       ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        workspaces        ; tab emulation, persistence & separate workspaces
        ;;zen               ; distraction-free coding or writing
@@ -98,5 +94,4 @@
        yaml              ; JSON, but readable
        :config
        (default +smartparens))
-
 
