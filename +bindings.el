@@ -581,9 +581,9 @@
         "C-M-d"     #'sp-splice-sexp
         "C-M-k"     #'sp-kill-sexp
         "C-M-t"     #'sp-transpose-sexp
-        "C-<right>" #'sp-forward-slurp-sexp
+        ;;"C-<right>" #'sp-forward-slurp-sexp
         "M-<right>" #'sp-forward-barf-sexp
-        "C-<left>"  #'sp-backward-slurp-sexp
+        ;;"C-<left>"  #'sp-backward-slurp-sexp
         "M-<left>"  #'sp-backward-barf-sexp)
 
       ;;; treemacs
@@ -616,7 +616,7 @@
     ;;"C-d"                         'ark-delete-file-and-buffer
     "C-g"                         'goto-line
     "C-l"                         'downcase-dwim
-    "C-n"                         'new-untitled-buffer
+    "C-n"                         'tab-bar-new-tab
     "C-o"                         'find-file
     "C-q"                         'delete-frame
     ;;"C-r"                         'crux-rename-file-and-buffer
@@ -624,9 +624,11 @@
     ;;"<C-tab>"                     'ark-switch-to-previous-buffer
     "C-u"                         'upcase-dwim
     "C-v"                         'yank
+    "<C-left>"                    #'tab-bar-switch-to-prev-tab 
+    "<C-right>"                   #'tab-bar-switch-to-next-tab  
     ;;"C-w"                         'ark-kill-this-buffer ;TODO: Denne virker ikke på untitled etter at daemon ble tatt i bruk
     ;; TODO: Legg inn at når gjør C-w på messages-buffer drepes den ikke og en bytter til scratch-buffer
-    "C-w"                         'centaur-tabs--kill-this-buffer-dont-ask
+    "C-w"                         'tab-bar-close-tab ;; TODO: Må tilpasse denne funksjonene
     "C-y"                         'redo
     "C-z"                         'undo
     ;;"<C-right>"                   'awesome-tab-forward-tab
@@ -689,12 +691,6 @@
          "C-r"                     'swiper-query-replace
          )
         )
-    )
-
-    ;; TODO: Hvorfor virker ikke linjer under? Også når har de utenfor feature sjekk
-    (:when (featurep! :input tabs)
-        "<C-left>"  #'centaur-tabs-backward
-        "<C-right>"  #'centaur-tabs-forward
     )
 
     ;;; Comint keys

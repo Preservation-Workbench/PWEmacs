@@ -5,7 +5,7 @@
   "Opens a new empty buffer."
   (interactive)
   (let ((buf (generate-new-buffer "Untitled")))
-    (centaur-tabs-mode)
+    ;; (centaur-tabs-mode) ;; TODO: Avvent om skal bruke centaur tabs
     (switch-to-buffer buf)
     (text-mode) ;; TODO: Tregere start hvis text-mode -> hvordan endre i etterkant?
     (doom-mark-buffer-as-real-h) ;; TODO: Virker denne?
