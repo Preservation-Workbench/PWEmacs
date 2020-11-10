@@ -7,6 +7,8 @@
   (setq byte-compile-warnings '(cl-functions))
   (add-hook 'markdown-mode-hook #'pwe/markdown-unhighlight))
 
+;; Preview med xwidgets: https://github.com/seagle0128/grip-mode#customize
+;; TODO: Sett opp preview skikkelig
 
 ;; https://superuser.com/a/1025827
 ;; ;; TODO: Flytt denne til egen fil for funksjoner som brukes flere steder
