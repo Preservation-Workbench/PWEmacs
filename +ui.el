@@ -11,7 +11,7 @@
   (setq-default icon-title-format  '("PWEmacs"))
   (setq doom-font (font-spec :family "Fira Code" :size 13))
   (setq-default
-   fill-column 120
+   display-fill-column-indicator-column 120
    truncate-lines t)
   ;; TODO: Automatiser installasjon av font selv heller enn bruke kommando
   (menu-bar-mode 1)
@@ -222,7 +222,22 @@ questions.  Else use completion to select the tab to switch to."
   )
 
 
+;;; Fill column
+(after! display-fill-column-indicator
+  (setq-default display-fill-column-indicator-character ?|)
+  (defun set-face-fci ()
+    ""
+    (let* ((bk (face-background 'default nil 'default))
+          (fg (color-name-to-rgb (face-foreground 'default nil 'default)))
+          (bg (color-name-to-rgb bk))
+          mod fl bl)
+      (setq fl (nth 2 (apply 'color-rgb-to-hsl fg)))
+      (setq bl (nth 2 (apply 'color-rgb-to-hsl bg)))
+      (setq mod (cond ((< fl bl) -1) ((> fl bl) 1) ((< 0.5 bl) -1) (t 1)))
+      (set-face-foreground 'fill-column-indicator (color-lighten-name bk (* mod 10))))
+    )
 
-;; (setq display-fill-column-indicator-character ?|)
-;; (setq display-fill-column-indicator-character ?\N{U+2506})
-;; TODO: Se hvordan hvordan indent guides får penere strek. Bare face?
+  (custom-set-faces
+  '(fill-column-indicator ((t (:inherit default)))))
+  (set-face-fci)
+  )
