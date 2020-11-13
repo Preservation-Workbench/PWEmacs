@@ -10,6 +10,9 @@
   (setq-default frame-title-format '("PWEmacs"))
   (setq-default icon-title-format  '("PWEmacs"))
   (setq doom-font (font-spec :family "Fira Code" :size 13))
+  (setq-default
+   fill-column 120
+   truncate-lines t)
   ;; TODO: Automatiser installasjon av font selv heller enn bruke kommando
   (menu-bar-mode 1)
   (setq doom-theme 'doom-one-light)
@@ -75,6 +78,7 @@
   (setq tab-bar-back-button "")
   (setq tab-bar-forward-button "")
   (setq tab-bar-close-button-show nil)
+  (setq tab-bar-new-button-show nil)
   (setq tab-bar-close-last-tab-choice "*scratch*") ;; TODO: Denne virker ikke helt
   (setq tab-bar-close-tab-select 'recent)
   (setq tab-bar-new-tab-choice t)
@@ -84,36 +88,36 @@
   (setq tab-bar-tab-hints nil)
   (setq tab-bar-tab-name-function 'tab-bar-tab-name-all)
 
-  (custom-set-faces
- '(tab-bar
-   ((t (
-        ;;:background "#393939"
-        :height 1.2
-        ))))
- '(tab-bar-tab
-   ((t (
-        ;;:background "#393939"
-        ;;:foreground "#cc99cc"
-        :box nil ; '(:line-width 1 :style nil)
-        :inverse-video: nil
-        :height 0.9
-        ))))
- '(tab-bar-tab-inactive
-   ((t (
-        ;;:background "#999999"
-        ;;:foreground "#393939"
-        :box nil ; '(:line-width 1 :style nil)
-        :inverse-video: nil
-        :height 0.9
-        ))))
- ;; '(tab-line
+  ;; TODO: Endring under gjorte at frame ble høyere for hver gang
+ ;;  (custom-set-faces
+ ;; '(tab-bar
  ;;   ((t (
- ;;        :background "#191919"
+ ;;        ;;:background "#393939"
+ ;;        :height 1.2
  ;;        ))))
- )
+ ;; '(tab-bar-tab
+ ;;   ((t (
+ ;;        ;;:background "#393939"
+ ;;        ;;:foreground "#cc99cc"
+ ;;        :box nil ; '(:line-width 1 :style nil)
+ ;;        :inverse-video: nil
+ ;;        :height 0.9
+ ;;        ))))
+ ;; '(tab-bar-tab-inactive
+ ;;   ((t (
+ ;;        ;;:background "#999999"
+ ;;        ;;:foreground "#393939"
+ ;;        :box nil ; '(:line-width 1 :style nil)
+ ;;        :inverse-video: nil
+ ;;        :height 0.9
+ ;;        ))))
+ ;; ;; '(tab-line
+ ;; ;;   ((t (
+ ;; ;;        :background "#191919"
+ ;; ;;        ))))
+ ;; )
 
-
-  ;;(tab-bar-mode 1) ;; TODO: Reduser høyde på frame før aktiverer så ikke øker høyde på frame
+  (tab-bar-mode 1) ;; TODO: Reduser høyde på frame før aktiverer så ikke øker høyde på frame
   (global-tab-line-mode -1)
   (tab-bar-history-mode -1)
 
@@ -186,6 +190,7 @@ questions.  Else use completion to select the tab to switch to."
                 (t
                  "Default"))))
   )
+
 
 
 (use-package! mini-frame

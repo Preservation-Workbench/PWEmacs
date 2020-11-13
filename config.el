@@ -6,6 +6,7 @@
   (interactive)
   (let ((buf (generate-new-buffer "Untitled")))
     ;; (centaur-tabs-mode) ;; TODO: Avvent om skal bruke centaur tabs
+    ;;(tab-bar-mode)
     (switch-to-buffer buf)
     (text-mode) ;; TODO: Tregere start hvis text-mode -> hvordan endre i etterkant?
     (doom-mark-buffer-as-real-h) ;; TODO: Virker denne?
@@ -22,10 +23,17 @@
 ;; (add-hook 'fundamental-mode-hook #'doom-hide-modeline-mode)
 ;; (add-hook 'minibuffer-setup-hook #'hide-mode-line-mode)
 
+(load! "+ui")
 
 (defun maple-scratch-hide-lines ()
   (when (or maple-scratch-anywhere (equal (buffer-name) maple-scratch-buffer))
-      (hide-mode-line-mode)))
+    (progn
+      (tab-bar-rename-tab "Home")
+      ;; TODO: Endre slik at aldri kan være andre buffere enn scratch i home tab.
+      ;; --> Lag ny tab auto hvis åpner ny buffer når i denne
+
+    (hide-mode-line-mode))
+    ))
 
 (add-hook 'after-change-major-mode-hook #'maple-scratch-hide-lines)
 
@@ -125,7 +133,7 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(load! "+ui")
+
 (load! "+bindings.el")
 (load! "+org.el")
 (load! "+markdown.el")
