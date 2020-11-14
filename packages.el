@@ -58,6 +58,7 @@
 (package! flycheck-bashate)
 (package! tab-jump-out)
 (package! grip-mode)
+(package! counsel-world-clock)
 (package! counsel-etags) ;; TODO: Bruke counsel-imenu heller?
 (package! show-eol :recipe (:host github :repo "jcs-elpa/show-eol"))
 (package! point-history :recipe (:host github :repo "blue0513/point-history"))

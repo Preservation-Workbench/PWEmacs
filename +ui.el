@@ -11,7 +11,7 @@
   (setq-default icon-title-format  '("PWEmacs"))
   (setq doom-font (font-spec :family "Fira Code" :size 13))
   (setq-default
-   display-fill-column-indicator-column 120
+   display-fill-column-indicator-column 110
    truncate-lines t)
   ;; TODO: Automatiser installasjon av font selv heller enn bruke kommando
   (menu-bar-mode 1)
@@ -222,6 +222,7 @@ questions.  Else use completion to select the tab to switch to."
   )
 
 
+;; TODO: Farge på fill column ikke oppdatert når åpner fil på direkten
 ;;; Fill column
 (after! display-fill-column-indicator
   (setq-default display-fill-column-indicator-character ?|)
