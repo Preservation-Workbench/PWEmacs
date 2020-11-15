@@ -79,7 +79,7 @@
   (setq tab-bar-forward-button "")
   (setq tab-bar-close-button-show nil)
   (setq tab-bar-new-button-show nil)
-  (setq tab-bar-close-last-tab-choice "*scratch*") ;; TODO: Denne virker ikke helt
+  (setq tab-bar-close-last-tab-choice "Home") ;; TODO: Denne virker ikke helt -> havner på Home men ikke med scratch?
   (setq tab-bar-close-tab-select 'recent)
   (setq tab-bar-new-tab-choice t)
   (setq tab-bar-new-tab-to 'right)
@@ -121,24 +121,6 @@
   (global-tab-line-mode -1)
   (tab-bar-history-mode -1)
 
-  (defun prot/tab-bar-select-tab-dwim ()
-    "Do-What-I-Mean function for getting to a `tab-bar-mode' tab.
-If no other tab exists, create one and switch to it.  If there is
-one other tab (so two in total) switch to it without further
-questions.  Else use completion to select the tab to switch to."
-    (interactive)
-    (let ((tabs (mapcar (lambda (tab)
-                          (alist-get 'name tab))
-                        (tab-bar--tabs-recent))))
-      (cond ((eq tabs nil)
-             (tab-new))
-            ((eq (length tabs) 1)
-             (tab-next))
-            (t
-             (icomplete-vertical-do ()
-               (tab-bar-switch-to-tab
-                (completing-read "Select tab: " tabs nil t)))))))
-
   ;; :bind (("C-x t t" . prot/tab-bar-select-tab-dwim)
   ;;        ("s-t" . prot/tab-bar-select-tab-dwim)
   ;;        ("C-x t s" . tab-switcher))
@@ -149,47 +131,6 @@ questions.  Else use completion to select the tab to switch to."
   ;; TODO: Må ha symbol og ikke farge direkte i linjer over
   )
 
-(use-package! centaur-tabs
-  :after centaur-tabs
-  :config
-  (defun centaur-tabs-hide-tab (x)
-    "Do no to show buffer X in tabs."
-    (let ((name (format "%s" x)))
-      (or
-       ;; Current window is not dedicated window.
-       (window-dedicated-p (selected-window))
-       ;; Buffer name not match below blacklist.
-       (string-prefix-p "*scratch*" name)
-       (string-prefix-p "*epc" name)
-       (string-prefix-p "*helm" name)
-       (string-prefix-p "*Helm" name)
-       (string-prefix-p "*Compile-Log*" name)
-       (string-prefix-p "*lsp" name)
-       (string-prefix-p "*company" name)
-       (string-prefix-p "*Flycheck" name)
-       (string-prefix-p "*tramp" name)
-       (string-prefix-p " *Mini" name)
-       (string-prefix-p "*help" name)
-       (string-prefix-p "*straight" name)
-       (string-prefix-p " *temp" name)
-       (string-prefix-p "*Help" name)
-       (string-prefix-p "*mybuf" name)
-       ;; Is not magit buffer.
-       (and (string-prefix-p "magit" name)
-            (not (file-name-extension name))))))
-  (defun centaur-tabs-buffer-groups ()
-    "Use as few groups as possible."
-    (list (cond ((string-equal "*" (substring (buffer-name) 0 1))
-                 (cond ((string-equal "eglot"
-                                      (downcase (substring (buffer-name) 1 6)))
-                        "Eglot")
-                        (t
-                        "Tools")))
-                ((string-equal "magit" (downcase (substring (buffer-name) 0 5)))
-                  "Magit")
-                (t
-                 "Default"))))
-  )
 
 
 
@@ -224,8 +165,25 @@ questions.  Else use completion to select the tab to switch to."
 
 ;; TODO: Farge på fill column ikke oppdatert når åpner fil på direkten
 ;;; Fill column
-(after! display-fill-column-indicator
-  (setq-default display-fill-column-indicator-character ?|)
+;; (after! display-fill-column-indicator
+;;   (setq-default display-fill-column-indicator-character ?|)
+;;   (defun set-face-fci ()
+;;     ""
+;;     (let* ((bk (face-background 'default nil 'default))
+;;           (fg (color-name-to-rgb (face-foreground 'default nil 'default)))
+;;           (bg (color-name-to-rgb bk))
+;;           mod fl bl)
+;;       (setq fl (nth 2 (apply 'color-rgb-to-hsl fg)))
+;;       (setq bl (nth 2 (apply 'color-rgb-to-hsl bg)))
+;;       (setq mod (cond ((< fl bl) -1) ((> fl bl) 1) ((< 0.5 bl) -1) (t 1)))
+;;       (set-face-foreground 'fill-column-indicator (color-lighten-name bk (* mod 10))))
+;;     )
+
+;;   (custom-set-faces
+;;   '(fill-column-indicator ((t (:inherit default)))))
+;;   (set-face-fci)
+;;   )
+
   (defun set-face-fci ()
     ""
     (let* ((bk (face-background 'default nil 'default))
@@ -238,7 +196,4 @@ questions.  Else use completion to select the tab to switch to."
       (set-face-foreground 'fill-column-indicator (color-lighten-name bk (* mod 10))))
     )
 
-  (custom-set-faces
-  '(fill-column-indicator ((t (:inherit default)))))
-  (set-face-fci)
-  )
+(add-hook 'prog-mode-hook #'set-face-fci)
