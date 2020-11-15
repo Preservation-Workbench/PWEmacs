@@ -7,6 +7,7 @@
   (let ((buf (generate-new-buffer "Untitled")))
     ;; (centaur-tabs-mode) ;; TODO: Avvent om skal bruke centaur tabs
     ;;(tab-bar-mode)
+    (pretty-tabs-mode)
     (switch-to-buffer buf)
     (text-mode) ;; TODO: Tregere start hvis text-mode -> hvordan endre i etterkant?
     (doom-mark-buffer-as-real-h) ;; TODO: Virker denne?
@@ -28,6 +29,7 @@
 (defun maple-scratch-hide-lines ()
   (when (or maple-scratch-anywhere (equal (buffer-name) maple-scratch-buffer))
     (progn
+      ;; TODO: Sjekk her på om tab-bar-mode er aktivt?
       (tab-bar-rename-tab "Home") ;; TODO: Feil at tab blir Home når åpner fil på direkten med emacs
       ;; TODO: Endre slik at aldri kan være andre buffere enn scratch i home tab.
       ;; --> Lag ny tab auto hvis åpner ny buffer når i denne

@@ -18,13 +18,15 @@
   (setq doom-theme 'doom-one-light)
   (defun pw-save-frame-size ()           ; Save frame-size between sessions
     (pw-de-maximize)
+    (pretty-tabs-mode)
     (call-process-shell-command
      (concat "nohup grep -q 'emacs.geometry:*' ~/.Xresources 2> /dev/null"
              " || echo 'emacs.geometry: 100x46' >> ~/.Xresources &"))
     (call-process-shell-command
      (concat "nohup sed -i 's/^emacs.geometry: .*/emacs.geometry: "
              (number-to-string (frame-width)) "x"
-             (number-to-string (- (frame-height) 3)) "/g' ~/.Xresources &"))
+             (number-to-string (frame-height)) "/g' ~/.Xresources &"))
+    ;; TODO: Nødvendig å ha Emacs.tabBar: 0 i xresources?
     (call-process-shell-command "nohup xrdb -merge ~/.Xresources &"))
   (defun pw-de-maximize ()
     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
@@ -67,13 +69,14 @@
 (load! "vendor/pretty-tabs.el")
 
 
-;; TODO: Se over disse: 
-;; https://github.com/tadfisher/nixhome/blob/540da320eade4f4d9eec61861a1c7cd08be3206a/pkgs/emacs/pretty-tabs/pretty-tabs.el
+;; TODO: Se over disse:
 ;; https://github.com/pfault/dotfiles/blob/3c5a89b8fcdf23d03d7ce66c9fb91c245a973b6e/.emacs.d/modules/workspace/nexus-tab-bar.el
 (use-package tab-bar
   :init
-  (pretty-tabs-mode)
+  (tab-bar-mode -1)
+  ;;(pretty-tabs-mode)
   :config
+  ;; (tab-bar-mode -1)
   ;;(setq tab-bar-button-margin 0)
   ;;(setq tab-bar-button-relief 0)
   ;;(setq tab-bar-border 2)
@@ -122,7 +125,7 @@
  ;; ;;        ))))
  ;; )
 
-  (tab-bar-mode 1) ;; TODO: Reduser høyde på frame før aktiverer så ikke øker høyde på frame
+  ;;(tab-bar-mode 1) ;; TODO: Reduser høyde på frame før aktiverer så ikke øker høyde på frame
   (global-tab-line-mode -1)
   (tab-bar-history-mode -1)
 
