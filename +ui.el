@@ -24,7 +24,7 @@
     (call-process-shell-command
      (concat "nohup sed -i 's/^emacs.geometry: .*/emacs.geometry: "
              (number-to-string (frame-width)) "x"
-             (number-to-string (- (frame-height) 1)) "/g' ~/.Xresources &"))
+             (number-to-string (- (frame-height) 3)) "/g' ~/.Xresources &"))
     (call-process-shell-command "nohup xrdb -merge ~/.Xresources &"))
   (defun pw-de-maximize ()
     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
@@ -64,13 +64,15 @@
 
 ;;   )
 
+(load! "vendor/pretty-tabs.el")
 
-(customize-set-variable 'tab-bar-new-tab-choice (lambda () (new-untitled-buffer)))
 
 ;; TODO: Se over disse: 
 ;; https://github.com/tadfisher/nixhome/blob/540da320eade4f4d9eec61861a1c7cd08be3206a/pkgs/emacs/pretty-tabs/pretty-tabs.el
 ;; https://github.com/pfault/dotfiles/blob/3c5a89b8fcdf23d03d7ce66c9fb91c245a973b6e/.emacs.d/modules/workspace/nexus-tab-bar.el
 (use-package tab-bar
+  :init
+  (pretty-tabs-mode)
   :config
   ;;(setq tab-bar-button-margin 0)
   ;;(setq tab-bar-button-relief 0)
@@ -79,9 +81,12 @@
   (setq tab-bar-forward-button "")
   (setq tab-bar-close-button-show nil)
   (setq tab-bar-new-button-show nil)
-  (setq tab-bar-close-last-tab-choice "Home") ;; TODO: Denne virker ikke helt -> havner på Home men ikke med scratch?
+  ;; (setq-default tab-bar-close-last-tab-choice 'tab-bar-mode-disable)
+  (setq tab-bar-close-last-tab-choice "Home")
+  ;; TODO: Denne virker ikke helt -> havner på Home men ikke med scratch?
+  ;; --> Eller denn ok men må sørge for at ikke andre enn scratch buffer i Home tab bare?
   (setq tab-bar-close-tab-select 'recent)
-  (setq tab-bar-new-tab-choice t)
+  (setq tab-bar-new-tab-choice (lambda () (new-untitled-buffer)))
   (setq tab-bar-new-tab-to 'right)
   (setq tab-bar-position nil)
   (setq tab-bar-show nil)
@@ -138,7 +143,8 @@
   :config
   (mini-frame-mode +1)
   (setq mini-frame-color-shift-step 10)
-  (setq mini-frame-show-parameters '((top . 0.01) (width . 0.7) (left . 0.5))))
+  (setq mini-frame-show-parameters '((top . 0.01) (width . 0.7) (left . 0.5)))
+  )
 
 
 (use-package mixed-pitch
@@ -163,37 +169,18 @@
   )
 
 
-;; TODO: Farge på fill column ikke oppdatert når åpner fil på direkten
-;;; Fill column
-;; (after! display-fill-column-indicator
-;;   (setq-default display-fill-column-indicator-character ?|)
-;;   (defun set-face-fci ()
-;;     ""
-;;     (let* ((bk (face-background 'default nil 'default))
-;;           (fg (color-name-to-rgb (face-foreground 'default nil 'default)))
-;;           (bg (color-name-to-rgb bk))
-;;           mod fl bl)
-;;       (setq fl (nth 2 (apply 'color-rgb-to-hsl fg)))
-;;       (setq bl (nth 2 (apply 'color-rgb-to-hsl bg)))
-;;       (setq mod (cond ((< fl bl) -1) ((> fl bl) 1) ((< 0.5 bl) -1) (t 1)))
-;;       (set-face-foreground 'fill-column-indicator (color-lighten-name bk (* mod 10))))
-;;     )
+(defun set-face-fci ()
+  "Lighter color fill column"
+  (let* ((bk (face-background 'default nil 'default))
+         (fg (color-name-to-rgb (face-foreground 'default nil 'default)))
+         (bg (color-name-to-rgb bk))
+         mod fl bl)
+    (setq fl (nth 2 (apply 'color-rgb-to-hsl fg)))
+    (setq bl (nth 2 (apply 'color-rgb-to-hsl bg)))
+    (setq mod (cond ((< fl bl) -1) ((> fl bl) 1) ((< 0.5 bl) -1) (t 1)))
+    (set-face-foreground 'fill-column-indicator (color-lighten-name bk (* mod 10))))
+  )
 
-;;   (custom-set-faces
-;;   '(fill-column-indicator ((t (:inherit default)))))
-;;   (set-face-fci)
-;;   )
+(add-hook 'prog-mode-hook #'set-face-fci) ;; TODO: Sjekk om prog-mode-hook som bruker av doom også
 
-  (defun set-face-fci ()
-    ""
-    (let* ((bk (face-background 'default nil 'default))
-          (fg (color-name-to-rgb (face-foreground 'default nil 'default)))
-          (bg (color-name-to-rgb bk))
-          mod fl bl)
-      (setq fl (nth 2 (apply 'color-rgb-to-hsl fg)))
-      (setq bl (nth 2 (apply 'color-rgb-to-hsl bg)))
-      (setq mod (cond ((< fl bl) -1) ((> fl bl) 1) ((< 0.5 bl) -1) (t 1)))
-      (set-face-foreground 'fill-column-indicator (color-lighten-name bk (* mod 10))))
-    )
 
-(add-hook 'prog-mode-hook #'set-face-fci)

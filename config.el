@@ -28,7 +28,7 @@
 (defun maple-scratch-hide-lines ()
   (when (or maple-scratch-anywhere (equal (buffer-name) maple-scratch-buffer))
     (progn
-      (tab-bar-rename-tab "Home")
+      (tab-bar-rename-tab "Home") ;; TODO: Feil at tab blir Home når åpner fil på direkten med emacs
       ;; TODO: Endre slik at aldri kan være andre buffere enn scratch i home tab.
       ;; --> Lag ny tab auto hvis åpner ny buffer når i denne
 
