@@ -7,8 +7,7 @@
   :config
 
   ;; Frame:
-  (setq-default frame-title-format '("PWEmacs"))
-  (setq-default icon-title-format  '("PWEmacs"))
+  (setq initial-frame-alist '((left . .5)))
   (setq doom-font (font-spec :family "Fira Code" :size 13))
   (setq-default
    display-fill-column-indicator-column 110

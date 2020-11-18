@@ -5,9 +5,8 @@
   "Opens a new empty buffer."
   (interactive)
   (let ((buf (generate-new-buffer "Untitled")))
-    ;; (centaur-tabs-mode) ;; TODO: Avvent om skal bruke centaur tabs
-    ;;(tab-bar-mode)
     (pretty-tabs-mode)
+    (set-scroll-bar-mode 'right)
     (switch-to-buffer buf)
     (text-mode) ;; TODO: Tregere start hvis text-mode -> hvordan endre i etterkant?
     (doom-mark-buffer-as-real-h) ;; TODO: Virker denne?
@@ -26,7 +25,7 @@
 
 (load! "+ui")
 
-(defun maple-scratch-hide-lines ()
+(defun maple-scratch-hide-lines () ;; TODO: Denne endring som gjør at unthemed mode-line vises?
   (when (or maple-scratch-anywhere (equal (buffer-name) maple-scratch-buffer))
     (progn
       ;; TODO: Sjekk her på om tab-bar-mode er aktivt?
@@ -37,16 +36,31 @@
     (hide-mode-line-mode))
     ))
 
+;; TODO: Test å skjule modeline opprinnelig med xresources
 (add-hook 'after-change-major-mode-hook #'maple-scratch-hide-lines)
 
+;; TODO: Se for bedre bruk av use-package: https://github.com/a13/emacs.d
+;; Hvorfan åpne flere filer fra cli til tabs? 
+;; - https://emacs.stackexchange.com/questions/61312/open-multiple-files-in-tabs-from-command-line
+;; - https://emacs.stackexchange.com/questions/61677/make-display-buffer-open-buffer-in-new-tab/61681#61681
 
 ;; TODO: Juster config på denne: https://github.com/honmaple/emacs-maple-scratch -> gjøre til +scratch? -> eller tilpasse maple-scratch direkte heller?
 ;; TODO: Juster så både modeline og header line ikke vises når scratch er aktiv buffer
+
 (load! "vendor/maple-scratch.el")
 (setq initial-scratch-message "")
 
+
+;; (add-hook 'emacs-startup-hook
+;;       (lambda ()
+;;         (if (= 1 (length command-line-args))
+;;             (maple-scratch-init)
+;;           )))
+
+;; TODO: Fiks så ingenting av dette lastes når emacs startes med fil arg
 (use-package maple-scratch
-  :hook (window-setup . maple-scratch-init)
+  :hook
+  (window-setup . maple-scratch-init)
   :config
   (setq maple-scratch-source nil
         maple-scratch-number 5
@@ -97,43 +111,6 @@
 ;; clients, file templates and snippets.
 (setq user-full-name "John Doe"
       user-mail-address "john@doe.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
-
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
 
 
 (load! "+bindings.el")
@@ -188,3 +165,4 @@
 (add-hook 'prog-mode-hook
           (lambda ()
             (tab-jump-out-mode)))
+
