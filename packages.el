@@ -58,6 +58,10 @@
 (package! flycheck-bashate)
 (package! tab-jump-out)
 (package! grip-mode)
+(package! pretty-hydra) ;; TODO: Beholde denne?
+(package! hydra-posframe)
+;; (package! switch-buffer-functions)
+(package! hydra-posframe :recipe (:host github :repo "Ladicle/hydra-posframe"))
 (package! counsel-world-clock)
 (package! counsel-etags) ;; TODO: Bruke counsel-imenu heller?
 (package! show-eol :recipe (:host github :repo "jcs-elpa/show-eol"))

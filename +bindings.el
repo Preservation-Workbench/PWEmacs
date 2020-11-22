@@ -618,7 +618,7 @@
     "C-l"                         'downcase-dwim
     "C-n"                         'tab-bar-new-tab
     "C-o"                         'find-file
-    "C-q"                         'delete-frame
+    "C-q"                         'kill-emacs
     ;;"C-r"                         'crux-rename-file-and-buffer
     "C-s"                         'save-buffer
     ;;"<C-tab>"                     'ark-switch-to-previous-buffer

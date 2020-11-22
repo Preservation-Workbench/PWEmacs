@@ -6,7 +6,7 @@
   (interactive)
   (let ((buf (generate-new-buffer "Untitled")))
     (pretty-tabs-mode)
-    (set-scroll-bar-mode 'right)
+    ;; (set-scroll-bar-mode 'right)
     (switch-to-buffer buf)
     (text-mode) ;; TODO: Tregere start hvis text-mode -> hvordan endre i etterkant?
     (doom-mark-buffer-as-real-h) ;; TODO: Virker denne?

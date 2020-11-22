@@ -185,4 +185,28 @@
 
 (add-hook 'prog-mode-hook #'set-face-fci) ;; TODO: Sjekk om prog-mode-hook som bruker av doom også
 
+;; TODO: Sjekk om kan få vist denne i mini-frame
+;; TODO: Bruke pretty-hydra?
+(defhydra hydra-mark-buffer (:exit t :idle 1.0)
+  "Mark buffer"
+  ("w" mark-whole-buffer "Whole buffer")
+  ("a" mark-buffer-after-point "Buffer after point")
+  ("b" mark-buffer-before-point "Buffer before point"))
 
+(global-set-key (kbd "M-l") 'hydra-mark-buffer) ;; TODO: HVorfor virker ikke denne?
+
+;; TODO: Gjøre mer lik mini-frame?
+(use-package hydra-posframe
+  :hook (after-init . hydra-posframe-enable))
+
+
+(defun update-scroll-bars ()
+  (interactive)
+  (mapc (lambda (win)
+          (set-window-scroll-bars win nil))
+        (window-list))
+  (if (buffer-file-name (window-buffer (selected-window)))
+      (set-window-scroll-bars (selected-window) 10 'right)))
+
+(add-hook 'window-configuration-change-hook 'update-scroll-bars)
+(add-hook 'buffer-list-update-hook 'update-scroll-bars)
