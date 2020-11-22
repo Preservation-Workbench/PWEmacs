@@ -69,4 +69,6 @@
 (package! ivy-point-history :recipe (:host github :repo "SuzumiyaAoba/ivy-point-history"))
 (package! ctrlf :recipe (:host github :repo "raxod502/ctrlf"))
 
-(package! which-key :disable t)
+;; (package! which-key :disable t)
+;; TODO: Kan legge til flere med space mellom i variant under
+(disable-packages! which-key)

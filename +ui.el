@@ -1,8 +1,5 @@
 ;;; +ui.el -*- lexical-binding: t; -*-
 
-;; TODO: Se for eksempel på bruk av doom emacs sin use-package! (med utropstegn):
-;; https://github.com/jethrokuan/dots/blob/master/.doom.d/config.el
-
 (use-package! emacs
   :config
 
@@ -70,7 +67,7 @@
 
 ;; TODO: Se over disse:
 ;; https://github.com/pfault/dotfiles/blob/3c5a89b8fcdf23d03d7ce66c9fb91c245a973b6e/.emacs.d/modules/workspace/nexus-tab-bar.el
-(use-package tab-bar
+(use-package! tab-bar
   :init
   (tab-bar-mode -1)
   ;;(pretty-tabs-mode)
@@ -149,7 +146,7 @@
   )
 
 
-(use-package mixed-pitch
+(use-package! mixed-pitch
   :hook
   (text-mode . mixed-pitch-mode)
   )
@@ -195,11 +192,13 @@
 
 (global-set-key (kbd "M-l") 'hydra-mark-buffer) ;; TODO: HVorfor virker ikke denne?
 
+;; TODO: Lag hydra for C-n slik at kan velge hva som skal i ny tab
+
 ;; TODO: Gjøre mer lik mini-frame?
-(use-package hydra-posframe
+(use-package! hydra-posframe
   :hook (after-init . hydra-posframe-enable))
 
-
+;; Scrollbar only on active window visiting file
 (defun update-scroll-bars ()
   (interactive)
   (mapc (lambda (win)

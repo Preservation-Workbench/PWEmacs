@@ -1,45 +1,43 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-; TODO: Hvorfor feil bakgrunnsfarge? Fordi ikke lagret fil?
-(defun new-untitled-buffer ()
-  "Opens a new empty buffer."
-  (interactive)
-  (let ((buf (generate-new-buffer "Untitled")))
-    (pretty-tabs-mode)
-    ;; (set-scroll-bar-mode 'right)
-    (switch-to-buffer buf)
-    (text-mode) ;; TODO: Tregere start hvis text-mode -> hvordan endre i etterkant?
-    (doom-mark-buffer-as-real-h) ;; TODO: Virker denne?
-    (turn-on-solaire-mode) ;; Virker ikke
-    (setq buffer-offer-save t) ;; TODO: Fiks så denne respekteres ved lukking av tab med mus
-    )
-  ;(add-hook 'kill-buffer-query-functions
-            ;'ask-to-save-modified nil t) ;; TODO: Denne sies er undefined
-  )
+;
+;
+;; TODO: Se over eksempel under for hvordan bruke use-package riktig
+;; --> se også her: https://github.com/jethrokuan/dots/blob/master/.doom.d/config.el
+;; --> og her: https://github.com/a13/emacs.d
+;; (use-package! hl-todo
+;;   ;; if you omit :defer, :hook, :commands, or :after, then the package is loaded
+;;   ;; immediately. By using :hook here, the `hl-todo` package won't be loaded
+;;   ;; until prog-mode-hook is triggered (by activating a major mode derived from
+;;   ;; it, e.g. python-mode)
+;;   :hook (prog-mode . hl-todo-mode)
+;;   :init
+;;   ;; code here will run immediately
+;;   :config
+;;   ;; code here will run after the package is loaded
+;;   (setq hl-todo-highlight-punctuation ":"))
 
-;; TODO: Denne skal virke men får den ikke til å virke med mine modes -> det finnes ingen fundament-mode hook
-;; (add-hook 'completion-list-mode-hook #'doom-hide-modeline-mode)
 
-;; (add-hook 'fundamental-mode-hook #'doom-hide-modeline-mode)
-;; (add-hook 'minibuffer-setup-hook #'hide-mode-line-mode)
-
+(load! "+defuns")
 (load! "+ui")
+
+;; TODO: Se her for riktig lasting av lokal pakke:
+;; https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#usingloading-local-packages
 
 (defun maple-scratch-hide-lines () ;; TODO: Denne endring som gjør at unthemed mode-line vises?
   (when (or maple-scratch-anywhere (equal (buffer-name) maple-scratch-buffer))
     (progn
       ;; TODO: Sjekk her på om tab-bar-mode er aktivt?
-      (tab-bar-rename-tab "Home") ;; TODO: Feil at tab blir Home når åpner fil på direkten med emacs
+      (tab-bar-rename-tab "Home")
+      ;; TODO: Feil at tab blir Home når åpner fil på direkten med emacs. Bare når tabs aktivert med en gang
       ;; TODO: Endre slik at aldri kan være andre buffere enn scratch i home tab.
       ;; --> Lag ny tab auto hvis åpner ny buffer når i denne
-
     (hide-mode-line-mode))
     ))
 
 ;; TODO: Test å skjule modeline opprinnelig med xresources
 (add-hook 'after-change-major-mode-hook #'maple-scratch-hide-lines)
 
-;; TODO: Se for bedre bruk av use-package: https://github.com/a13/emacs.d
 ;; Hvorfan åpne flere filer fra cli til tabs? 
 ;; - https://emacs.stackexchange.com/questions/61312/open-multiple-files-in-tabs-from-command-line
 ;; - https://emacs.stackexchange.com/questions/61677/make-display-buffer-open-buffer-in-new-tab/61681#61681
@@ -58,7 +56,7 @@
 ;;           )))
 
 ;; TODO: Fiks så ingenting av dette lastes når emacs startes med fil arg
-(use-package maple-scratch
+(use-package! maple-scratch
   :hook
   (window-setup . maple-scratch-init)
   :config
@@ -123,7 +121,7 @@
 ;; https://github.com/CsBigDataHub/counsel-fd/blob/master/counsel-fd.el
 ;; TODO: Finn bedre ivy/counsel for fd-find eller fiks/lag kode selv
 
-(use-package counsel-etags
+(use-package! counsel-etags
   :init
   (add-hook 'prog-mode-hook
         (lambda ()
