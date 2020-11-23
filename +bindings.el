@@ -673,7 +673,8 @@
         [C-tab]      #'+ivy/switch-buffer
         "M-p"        #'ivy-point-history
         "M-t"        #'counsel-etags-list-tag-in-current-file
-        "C-f"        #'swiper-isearch
+        "C-f"        #'ivy-searcher-search-file
+        ;; TODO: Legg inn for ivy-searcher-replace og. Prosjektvariant og?
         "C-S-f"      #'swiper-all
         "M-o"      #'counsel-buffer-or-recentf
         "C-S-v"      #'counsel-yank-pop

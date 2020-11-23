@@ -60,6 +60,7 @@
 (package! grip-mode)
 (package! pretty-hydra) ;; TODO: Beholde denne?
 (package! hydra-posframe)
+(package! ivy-searcher)
 ;; (package! switch-buffer-functions)
 (package! hydra-posframe :recipe (:host github :repo "Ladicle/hydra-posframe"))
 (package! counsel-world-clock)

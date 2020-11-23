@@ -209,3 +209,4 @@
 
 (add-hook 'window-configuration-change-hook 'update-scroll-bars)
 (add-hook 'buffer-list-update-hook 'update-scroll-bars)
+
